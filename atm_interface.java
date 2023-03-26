@@ -50,7 +50,7 @@ public class atm_interface extends JFrame implements ActionListener {
              String m2 = p.showInputDialog(this, "Enter your atm no.", "Login", JOptionPane.INFORMATION_MESSAGE);
                 if (m1.equals("Richard"))
                   {
-                      if (m2.equals("1111"))
+                      if (m2.equals("3723"))
                          {
                              p.showMessageDialog(this, "User ID Approved", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                          }
