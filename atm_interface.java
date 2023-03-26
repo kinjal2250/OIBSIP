@@ -13,6 +13,7 @@ public class atm_interface extends JFrame implements ActionListener {
 
         setLayout(new FlowLayout());
         p=new JOptionPane();
+        
         UI.put("Panel.background", new ColorUIResource(234, 249, 189));
         UI.put("OptionPane.background", new ColorUIResource(196, 237, 148));
 
