@@ -7,13 +7,14 @@ public class atm_interface extends JFrame implements ActionListener {
     JOptionPane p;
     JButton b1,b2,b3,b4,b5,b6;
     int balance=5000;
+    int count=0;
     UIManager UI=new UIManager();
     atm_interface()
     {
 
         setLayout(new FlowLayout());
         p=new JOptionPane();
-        
+
         UI.put("Panel.background", new ColorUIResource(234, 249, 189));
         UI.put("OptionPane.background", new ColorUIResource(196, 237, 148));
 
@@ -45,37 +46,48 @@ public class atm_interface extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e)
     {
-         if(e.getSource()==b6)
-         {
-             String m1 = p.showInputDialog(this, "Enter your name", "Login", JOptionPane.INFORMATION_MESSAGE);
-             String m2 = p.showInputDialog(this, "Enter your atm no.", "Login", JOptionPane.INFORMATION_MESSAGE);
-                if (m1.equals("Richard"))
-                  {
-                      if (m2.equals("3723"))
-                         {
-                             p.showMessageDialog(this, "User ID Approved", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-                         }
-                  }
-                else
-                  {
-                      p.showMessageDialog(this, "User ID Denied", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-                  }
-         }
-         if(e.getSource()==b2)
-          {
-              String m1=p.showInputDialog(this,"Enter the amount to be withdrawn","Withdraw",JOptionPane.INFORMATION_MESSAGE);
-              int d=Integer.parseInt(m1);
-              balance=balance-d;
-              p.showMessageDialog(this,"Withdrawal Complete\nCurrent Balance: "+String.valueOf(balance),"Withdraw Done",JOptionPane.INFORMATION_MESSAGE);
-          }
-        if(e.getSource()==b3)
+        if(e.getSource()==b6)
+        {
+            String m1 = p.showInputDialog(this, "Enter your name", "Login", JOptionPane.INFORMATION_MESSAGE);
+            String m2 = p.showInputDialog(this, "Enter your atm no.", "Login", JOptionPane.INFORMATION_MESSAGE);
+            if (m1.equals("Richard"))
+            {
+                if (m2.equals("3723"))
+                {
+                    count=1;
+                    p.showMessageDialog(this, "User ID Approved", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+            else
+            {
+                count=0;
+                p.showMessageDialog(this, "User ID Denied", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+
+        if(e.getSource()==b2&&count==1)
+        {
+            String m1=p.showInputDialog(this,"Enter the amount to be withdrawn","Withdraw",JOptionPane.INFORMATION_MESSAGE);
+            int d=Integer.parseInt(m1);
+            balance=balance-d;
+            p.showMessageDialog(this,"Withdrawal Complete\nCurrent Balance: "+String.valueOf(balance),"Withdraw Done",JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if(e.getSource()==b2&&count==0)
+        {
+            p.showMessageDialog(this,"Access Denied","Attention",JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if(e.getSource()==b3&&count==1)
         {
             String m1=p.showInputDialog(this,"Enter the amount to be Deposited","Deposit",JOptionPane.INFORMATION_MESSAGE);
             int d=Integer.parseInt(m1);
             balance=balance+d;
             p.showMessageDialog(this,"Deposit Complete\nCurrent Balance: "+String.valueOf(balance),"Deposit Done",JOptionPane.INFORMATION_MESSAGE);
         }
-        if(e.getSource()==b4)
+        else if(e.getSource()==b3&&count==0)
+        {
+            p.showMessageDialog(this,"Access Denied","Attention",JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if(e.getSource()==b4&&count==1)
         {
             String m1=p.showInputDialog(this,"Enter the name of the person","Transfer",JOptionPane.INFORMATION_MESSAGE);
             String m2=p.showInputDialog(this,"Enter the amount to be transferred","Transfer",JOptionPane.INFORMATION_MESSAGE);
@@ -83,11 +95,19 @@ public class atm_interface extends JFrame implements ActionListener {
             balance=balance-d;
             p.showMessageDialog(this,m2+" transferred to "+m1+"\nCurrent Balance: "+String.valueOf(balance),"Withdraw Done",JOptionPane.INFORMATION_MESSAGE);
         }
-        if(e.getSource()==b1)
+        else if(e.getSource()==b4&&count==0)
+        {
+            p.showMessageDialog(this,"Access Denied","Attention",JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if(e.getSource()==b1&&count==1)
         {
             p.showMessageDialog(this,"Current Amount in your account : "+balance,"Transaction History",JOptionPane.INFORMATION_MESSAGE);
         }
-        if(e.getSource()==b5)
+        else if(e.getSource()==b1&&count==0)
+        {
+            p.showMessageDialog(this,"Access Denied","Attention",JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if(e.getSource()==b5)
         {
             System.exit(0);
         }
