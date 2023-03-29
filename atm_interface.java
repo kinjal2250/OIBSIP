@@ -1,120 +1,72 @@
+import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.UIManager;
-import javax.swing.plaf.ColorUIResource;
-public class atm_interface extends JFrame implements ActionListener {
+class NumberGuessingGame extends JFrame implements ActionListener
+{
+    JButton b1,b2;
     JOptionPane p;
-    JButton b1,b2,b3,b4,b5,b6;
-    int balance=5000;
-    int count=0;
-    UIManager UI=new UIManager();
-    atm_interface()
-    {
+    int count=0,attempt=0;
+    Random r=new Random();
+    int n;
 
+    NumberGuessingGame()
+    {
         setLayout(new FlowLayout());
         p=new JOptionPane();
-
-        UI.put("Panel.background", new ColorUIResource(234, 249, 189));
-        UI.put("OptionPane.background", new ColorUIResource(196, 237, 148));
-
-        b6=new JButton("Login");
-        b1=new JButton("Transaction History");
-        b2=new JButton("Withdraw");
-        b3=new JButton("Deposit");
-        b4=new JButton("Transfer");
-        b5=new JButton("Quit");
-        add(b1);add(b2);add(b3);add(b4);add(b6);add(b5);
+        b1=new JButton("Play");
+        b2=new JButton("Exit");
+        add(b1);add(b2);
         b1.addActionListener(this);
         b2.addActionListener(this);
-        b3.addActionListener(this);
-        b4.addActionListener(this);
-        b5.addActionListener(this);
-        b6.addActionListener(this);
-        setSize(400,150);
-        b6.setPreferredSize(new Dimension(80, 40));
-        b1.setBackground(new Color(233, 249, 182));
-        b2.setBackground(new Color(227, 244, 184));
-        b3.setBackground(new Color(227, 244, 184));
-        b4.setBackground(new Color(227, 244, 184));
-        b5.setBackground(new Color(227, 244, 184));
-        b6.setBackground(new Color(234, 252, 178));
-        b6.setOpaque(true);
+        setSize(300,150);
         setVisible(true);
 
     }
-
     public void actionPerformed(ActionEvent e)
     {
-        if(e.getSource()==b6)
+        if(e.getSource()==b1)
+
         {
-            String m1 = p.showInputDialog(this, "Enter your name", "Login", JOptionPane.INFORMATION_MESSAGE);
-            String m2 = p.showInputDialog(this, "Enter your atm no.", "Login", JOptionPane.INFORMATION_MESSAGE);
-            if (m1.equals("Richard"))
+            n= r.nextInt(1,100);
+            attempt++;
+            if(attempt<=3)
             {
-                if (m2.equals("3723"))
+                String cnum=p.showInputDialog(this,"Enter number between 1-100","Number Guessing Game",JOptionPane.INFORMATION_MESSAGE);
+
+                if(Integer.parseInt(cnum)==n)
                 {
-                    count=1;
-                    p.showMessageDialog(this, "User ID Approved", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                    p.showMessageDialog(this,"Your Guessing is correct","Result",JOptionPane.INFORMATION_MESSAGE);
+                    count++;
+                }
+                if(Integer.parseInt(cnum)<n)
+                {
+                    p.showMessageDialog(this,"Your Guessing is incorrect\nIt is lower than the generated number\nGenerated Number: "+n,"Result",JOptionPane.INFORMATION_MESSAGE);
+                }
+                if(Integer.parseInt(cnum)>n)
+                {
+                    p.showMessageDialog(this,"Your Guessing is incorrect\nIt is higher than the generated number\nGenerated Number : "+n,"Result",JOptionPane.INFORMATION_MESSAGE);
+                }
+                if(attempt==5)
+                {
+                    p.showMessageDialog(this,"Attempts: "+attempt+"\nScore: "+count+"\n----Thank you for Playing the game----","Score Card",JOptionPane.INFORMATION_MESSAGE);
                 }
             }
-            else
-            {
-                count=0;
-                p.showMessageDialog(this, "User ID Denied", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+            else{
+                p.showMessageDialog(this, "Your have used all your chances","Attention",JOptionPane.INFORMATION_MESSAGE);
             }
-        }
 
-        if(e.getSource()==b2&&count==1)
-        {
-            String m1=p.showInputDialog(this,"Enter the amount to be withdrawn","Withdraw",JOptionPane.INFORMATION_MESSAGE);
-            int d=Integer.parseInt(m1);
-            balance=balance-d;
-            p.showMessageDialog(this,"Withdrawal Complete\nCurrent Balance: "+String.valueOf(balance),"Withdraw Done",JOptionPane.INFORMATION_MESSAGE);
         }
-        else if(e.getSource()==b2&&count==0)
-        {
-            p.showMessageDialog(this,"Access Denied","Attention",JOptionPane.INFORMATION_MESSAGE);
-        }
-        else if(e.getSource()==b3&&count==1)
-        {
-            String m1=p.showInputDialog(this,"Enter the amount to be Deposited","Deposit",JOptionPane.INFORMATION_MESSAGE);
-            int d=Integer.parseInt(m1);
-            balance=balance+d;
-            p.showMessageDialog(this,"Deposit Complete\nCurrent Balance: "+String.valueOf(balance),"Deposit Done",JOptionPane.INFORMATION_MESSAGE);
-        }
-        else if(e.getSource()==b3&&count==0)
-        {
-            p.showMessageDialog(this,"Access Denied","Attention",JOptionPane.INFORMATION_MESSAGE);
-        }
-        else if(e.getSource()==b4&&count==1)
-        {
-            String m1=p.showInputDialog(this,"Enter the name of the person","Transfer",JOptionPane.INFORMATION_MESSAGE);
-            String m2=p.showInputDialog(this,"Enter the amount to be transferred","Transfer",JOptionPane.INFORMATION_MESSAGE);
-            int d=Integer.parseInt(m2);
-            balance=balance-d;
-            p.showMessageDialog(this,m2+" transferred to "+m1+"\nCurrent Balance: "+String.valueOf(balance),"Withdraw Done",JOptionPane.INFORMATION_MESSAGE);
-        }
-        else if(e.getSource()==b4&&count==0)
-        {
-            p.showMessageDialog(this,"Access Denied","Attention",JOptionPane.INFORMATION_MESSAGE);
-        }
-        else if(e.getSource()==b1&&count==1)
-        {
-            p.showMessageDialog(this,"Current Amount in your account : "+balance,"Transaction History",JOptionPane.INFORMATION_MESSAGE);
-        }
-        else if(e.getSource()==b1&&count==0)
-        {
-            p.showMessageDialog(this,"Access Denied","Attention",JOptionPane.INFORMATION_MESSAGE);
-        }
-        else if(e.getSource()==b5)
+        if(e.getSource()==b2)
         {
             System.exit(0);
         }
     }
     public static void main(String args[])
     {
-        new atm_interface();
+        // new NumberGuessingGame("Number Guessing Game");
 
+        new NumberGuessingGame();
     }
 }
+
