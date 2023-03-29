@@ -67,12 +67,11 @@ class NumberGuessingGame extends JFrame implements ActionListener
         // new NumberGuessingGame("Number Guessing Game");
 
         new NumberGuessingGame();
-
-
-
     }
-
-
-
-
 }
+
+    
+
+
+
+
